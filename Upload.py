@@ -1,16 +1,16 @@
 import subprocess
-from github import Github
 import os
 
 # Instalar o PyGitHub automaticamente, se não estiver instalado
 try:
-    import github
+    from github import Github  # Import correto do módulo Github
 except ImportError:
     subprocess.check_call(["pip", "install", "PyGithub"])
+    from github import Github  # Reimportar após a instalação
 
 # Configurações
-GITHUB_TOKEN = input("Token : ")  # Substitua pelo token gerado
-REPO_NAME = "dz09pl/Upload"  # Nome do repositório no formato 'usuario/nome-repositorio'
+GITHUB_TOKEN = "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"
+REPO_NAME = "dz09pl/Upload"  # Nome do repositório no formato 'usuario/repositorio'
 
 # Entrada do usuário para o caminho do arquivo
 FILE_PATH = input("Digite o caminho completo do arquivo que deseja enviar: ").strip()
@@ -27,7 +27,7 @@ TARGET_PATH = os.path.basename(FILE_PATH)
 g = Github(GITHUB_TOKEN)
 repo = g.get_repo(REPO_NAME)
 
-# Ler o conteúdo do arquivo local
+# Ler o conteúdo do arquivo local como binário
 with open(FILE_PATH, "rb") as file:
     content = file.read()
 
@@ -36,9 +36,8 @@ try:
     repo.create_file(
         path=TARGET_PATH,  # Caminho no repositório
         message=f"Adicionando o arquivo {TARGET_PATH}",  # Mensagem do commit
-        content=content.decode("utf-8")  # Conteúdo do arquivo
+        content=content  # Conteúdo do arquivo binário
     )
     print(f"Arquivo '{FILE_PATH}' enviado com sucesso para o repositório!")
 except Exception as e:
     print(f"Erro ao enviar o arquivo: {e}")
-  
