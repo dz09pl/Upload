@@ -9,7 +9,7 @@ except ImportError:
     subprocess.check_call(["pip", "install", "PyGithub"])
 
 # Configurações
-GITHUB_TOKEN = "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"  # Substitua pelo token gerado
+GITHUB_TOKEN = input("Token : ")  # Substitua pelo token gerado
 REPO_NAME = "dz09pl/Upload"  # Nome do repositório no formato 'usuario/nome-repositorio'
 
 # Entrada do usuário para o caminho do arquivo
